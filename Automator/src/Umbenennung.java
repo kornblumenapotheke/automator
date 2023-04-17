@@ -77,7 +77,9 @@ public class Umbenennung {
 	
 	public static void main(String[] args) throws Exception 
 	{
-		Umbenennung umbenennung = new Umbenennung ("D:\\owncloud\\1_APOTHEKE_Grafenstein_GZ\\LAUFENDER_BETRIEB\\Finanzen\\Automat Grafenstein\\Lagerbeschreibung_Automat.csv");
+		
+		
+		Umbenennung umbenennung = new Umbenennung ("src/Lagerbeschreibung_Automat.csv");
 	}
 
 }
