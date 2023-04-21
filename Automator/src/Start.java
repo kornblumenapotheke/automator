@@ -142,13 +142,15 @@ public class Start {
             String zaehler_verkaeufe =col[3];
             String gesamtbetrag =col[4];
             String bargeld = col[5];
-            String bankomat_menge = Float.toString((Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld)/Float.valueOf(einzelpreis)));
-            String bankomat_betrag=Float.toString( Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld));
-            String bar_menge=Float.toString(Float.valueOf(bargeld)/Float.valueOf(einzelpreis));
-            String bar_betrag=bargeld;
+            Float bankomat_menge = (Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld))/Float.valueOf(einzelpreis);
+            Float bankomat_betrag= Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld);
+            Float bar_menge=Float.valueOf(bargeld)/Float.valueOf(einzelpreis);
+            Float bar_betrag=Float.valueOf(bargeld);
             String subcolumn = column.length() > 2 ? column.substring(column.length() - 2) : column;
-            buchungen.add_buchungszeile(subcolumn, bar_menge, bar_betrag, false);
-            buchungen.add_buchungszeile(subcolumn, bankomat_menge, bankomat_betrag, true);            
+            if (bar_menge > 0.1)
+            		buchungen.add_buchungszeile(subcolumn, bar_menge, bar_betrag, false);
+            if (bankomat_menge > 0.1)
+            		buchungen.add_buchungszeile(subcolumn, bankomat_menge, bankomat_betrag, true);            
         }
         System.out.println (buchungen.get_header());
         

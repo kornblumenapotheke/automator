@@ -79,7 +79,7 @@ public class Umbenennung {
 	{
 		
 		
-		Umbenennung umbenennung = new Umbenennung ("src/Lagerbeschreibung_Automat.csv");
+		Umbenennung umbenennung = new Umbenennung ("Automator/src/Lagerbeschreibung_Automat.csv");
 	}
 
 }

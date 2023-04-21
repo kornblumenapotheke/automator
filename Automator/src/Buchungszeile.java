@@ -26,12 +26,10 @@ public class Buchungszeile
 		umbenennung= new Umbenennung("D:\\owncloud\\1_APOTHEKE_Grafenstein_GZ\\LAUFENDER_BETRIEB\\Finanzen\\Automat Grafenstein\\Lagerbeschreibung_Automat.csv");
 		Artikel artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
-		menge= in_menge;
-		preis_brutto = Integer.parseInt(in_betrag);
-		preis_netto = artikel.get
-		ist_bankomat = in_is_bankomat;
-		bezeichnung = artikel.get_artikelname();
 		steuersatz = artikel.get_steuersatz();
+		menge=in_menge;
+		ist_bankomat = in_is_bankomat;
+		
 		//finde steuersatz
 		//berechne nettowert		
 		
