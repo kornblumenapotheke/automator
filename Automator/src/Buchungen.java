@@ -4,7 +4,7 @@ public class Buchungen
 {
 	private ArrayList<Buchungszeile> buchungen= new ArrayList<Buchungszeile>();
 	private String header = "";
-	
+	String text = "NADA";
 	public void add_header(String in_header)
 	{
 		header += in_header+"\n";
@@ -27,5 +27,15 @@ public class Buchungen
 	public String get_header()
 	{
 		return header;
+	}
+	public String getText() {
+		// TODO Auto-generated method stub
+		text = "";
+		for (int i = 0;i<buchungen.size();i++)
+		{
+			Buchungszeile buchungszeile = buchungen.get(i);
+			buchungszeile.
+			
+		}
 	}
 }

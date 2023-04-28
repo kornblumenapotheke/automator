@@ -36,8 +36,9 @@ public class Start {
 		String filename_selected = "";
 		String file_path=newValue;
 		
-		Point loc_filechooser = new Point (100,100);
-		Point loc_output = new Point (100,200);
+		//Point loc_filechooser = new Point (100,100);
+		Point loc_output_1 = new Point (100,200);
+		Point loc_output_2 = new Point (600,200);
 		
 		//load settings
 		if (pref.get("path", "empty")=="empty")
@@ -47,8 +48,9 @@ public class Start {
 		
 		}
 		file_path=pref.get("path","empty");
-		loc_filechooser = new Point(Integer.valueOf(pref.get("filechooserx","100")),Integer.valueOf(pref.get("filechoosery","100")));
-		System.out.println (pref.get("filechooserx","XX100"));
+		loc_output_1 = new Point(Integer.valueOf(pref.get("output_1_x","100")),Integer.valueOf(pref.get("output_1_y","100")));
+		loc_output_2 = new Point(Integer.valueOf(pref.get("output_2_x","600")),Integer.valueOf(pref.get("output_2_y","100")));
+		//System.out.println (pref.get("filechooserx","XX100"));
 		
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
@@ -62,7 +64,7 @@ public class Start {
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		frame.setSize(500, 500);
-		frame.setLocation(loc_output);
+		frame.setLocation(loc_output_1);
 		frame.setTitle("Ergebnis");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setVisible(true);
@@ -90,14 +92,14 @@ public class Start {
 		JButton button_ritti = new JButton ("Ritti");
 		JButton button_korni = new JButton ("Korni");
 		button_ritti.setBackground(Color.cyan);
-		button_korni.setBackground(Color.blue);
+		button_korni.setBackground(Color.gray);
 		panel2.setLayout(new GridLayout(2,2));
 		panel2.add(button_ritti);
 		panel2.add(button_korni);
 		frame2.getContentPane().add(panel2);
 		frame2.setVisible(true);
 		frame2.setSize(500, 500);
-		frame2.setLocation(loc_output);
+		frame2.setLocation(loc_output_2);
 		frame2.setTitle("Auswahl");
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.setVisible(true);
