@@ -1,6 +1,4 @@
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,15 +12,12 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
 
-public class Start {
+public class StartOld {
 	
 	private static Buchungen buchungen ;
 
@@ -30,15 +25,14 @@ public class Start {
 	{
 		buchungen = new Buchungen();
 		//Fenster generieren
-		Preferences pref = Preferences.userNodeForPackage(Start.class);
+		Preferences pref = Preferences.userNodeForPackage(StartOld.class);
 		
 		String newValue = "D:\\\\owncloud\\\\1_APOTHEKE_Grafenstein_GZ\\\\LAUFENDER_BETRIEB\\\\Dokumente\\\\Impfstation Poggersdorf\\Archiv\\2022-01";
 		String filename_selected = "";
 		String file_path=newValue;
 		
-		//Point loc_filechooser = new Point (100,100);
-		Point loc_output_1 = new Point (100,200);
-		Point loc_output_2 = new Point (600,200);
+		Point loc_filechooser = new Point (100,100);
+		Point loc_output = new Point (100,200);
 		
 		//load settings
 		if (pref.get("path", "empty")=="empty")
@@ -48,23 +42,17 @@ public class Start {
 		
 		}
 		file_path=pref.get("path","empty");
-		loc_output_1 = new Point(Integer.valueOf(pref.get("output_1_x","100")),Integer.valueOf(pref.get("output_1_y","100")));
-		loc_output_2 = new Point(Integer.valueOf(pref.get("output_2_x","600")),Integer.valueOf(pref.get("output_2_y","100")));
-		//System.out.println (pref.get("filechooserx","XX100"));
+		loc_filechooser = new Point(Integer.valueOf(pref.get("filechooserx","100")),Integer.valueOf(pref.get("filechoosery","100")));
+		System.out.println (pref.get("filechooserx","XX100"));
 		
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		JTextArea text = new JTextArea();
-		JScrollPane scroll = new JScrollPane (text, 
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scroll.setSize(500, 500);
-
-		frame.add(scroll);
-		//panel.add(scroll);
+		panel.add(text);
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
 		frame.setSize(500, 500);
-		frame.setLocation(loc_output_1);
+		frame.setLocation(loc_output);
 		frame.setTitle("Ergebnis");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setVisible(true);
@@ -86,23 +74,6 @@ public class Start {
 		System.setOut(someOtherStream);
 		
 		
-		//Zweites Window für Auswahl Ritti oder Korni
-		JFrame frame2 = new JFrame();
-		JPanel panel2 = new JPanel();
-		JButton button_ritti = new JButton ("Ritti");
-		JButton button_korni = new JButton ("Korni");
-		button_ritti.setBackground(Color.cyan);
-		button_korni.setBackground(Color.gray);
-		panel2.setLayout(new GridLayout(2,2));
-		panel2.add(button_ritti);
-		panel2.add(button_korni);
-		frame2.getContentPane().add(panel2);
-		frame2.setVisible(true);
-		frame2.setSize(500, 500);
-		frame2.setLocation(loc_output_2);
-		frame2.setTitle("Auswahl");
-		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame2.setVisible(true);
 		
 		
 		
@@ -110,7 +81,41 @@ public class Start {
 		
 		
 		
-    
+        // JFileChooser-Objekt erstellen
+        JFileChooser chooser = new JFileChooser();
+        chooser.setLocation(loc_filechooser);
+        chooser.setPreferredSize(new Dimension (1000,1000));
+        // Dialog zum Oeffnen von Dateien anzeigen
+        File f = new File(file_path);
+        chooser.setCurrentDirectory(f);
+        
+        
+        //chooser.setCurrentDirectory(null);
+        int rueckgabeWert = chooser.showOpenDialog(null);
+        
+        /* Abfrage, ob auf "Öffnen" geklickt wurde */
+        if(rueckgabeWert == JFileChooser.APPROVE_OPTION)
+        {
+             // Ausgabe der ausgewaehlten Datei
+        	filename_selected = chooser.getSelectedFile().getName();
+			System.out.println("Die zu öffnende Datei ist: "+filename_selected) ;
+            File curDir = chooser.getCurrentDirectory();
+            
+            //props.setProperty(PREF_NAME, curDir.getCanonicalPath());
+            filename_selected=curDir.getCanonicalPath()+"/"+filename_selected;  
+            pref.put("path", curDir.getCanonicalPath());
+            int loc_x=chooser.getLocation().x;
+           // System.out.println("IS "+loc_x);
+            int loc_y=chooser.getLocation().y;
+            pref.put("filechooserx",Integer.toString(loc_x));
+            pref.put("filechoosery",Integer.toString(loc_y));
+            
+        }
+        else
+        {
+        	System.exit (101);
+        }
+        
         
         //Datei öffnen
         BufferedReader br = null;
@@ -137,15 +142,13 @@ public class Start {
             String zaehler_verkaeufe =col[3];
             String gesamtbetrag =col[4];
             String bargeld = col[5];
-            Float bankomat_menge = (Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld))/Float.valueOf(einzelpreis);
-            Float bankomat_betrag= Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld);
-            Float bar_menge=Float.valueOf(bargeld)/Float.valueOf(einzelpreis);
-            Float bar_betrag=Float.valueOf(bargeld);
+            String bankomat_menge = Float.toString((Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld)/Float.valueOf(einzelpreis)));
+            String bankomat_betrag=Float.toString( Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld));
+            String bar_menge=Float.toString(Float.valueOf(bargeld)/Float.valueOf(einzelpreis));
+            String bar_betrag=bargeld;
             String subcolumn = column.length() > 2 ? column.substring(column.length() - 2) : column;
-            if (bar_menge > 0.1)
-            		buchungen.add_buchungszeile(subcolumn, bar_menge, bar_betrag, false);
-            if (bankomat_menge > 0.1)
-            		buchungen.add_buchungszeile(subcolumn, bankomat_menge, bankomat_betrag, true);            
+            buchungen.add_buchungszeile(subcolumn, bar_menge, bar_betrag, false);
+            buchungen.add_buchungszeile(subcolumn, bankomat_menge, bankomat_betrag, true);            
         }
         System.out.println (buchungen.get_header());
         
