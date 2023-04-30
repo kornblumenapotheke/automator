@@ -24,7 +24,17 @@ public class Buchungszeile
 	
 	Buchungszeile (String inPos, String in_betrag, String in_menge, String in_is_bankomat) throws Exception
 	{
+
 		pos=inPos;
+		umbenennung= new Umbenennung("D:\\owncloud\\1_APOTHEKE_Grafenstein_GZ\\LAUFENDER_BETRIEB\\Finanzen\\Automat Grafenstein\\Lagerbeschreibung_Automat.csv");
+		Artikel artikel = umbenennung.get(inPos);
+		pzn = artikel.get_pzn();
+		steuersatz = artikel.get_steuersatz();
+		menge=in_menge;
+		ist_bankomat = in_is_bankomat;
+		
+		//finde steuersatz
+		//berechne nettowert		
 		
 		
 	}

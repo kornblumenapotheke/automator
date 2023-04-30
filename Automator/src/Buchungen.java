@@ -10,7 +10,7 @@ public class Buchungen
 		header += in_header+"\n";
 		//System.out.println (header);
 	}
-	public void add_buchungszeile (String in_column, String in_menge, String inBetrag, boolean isBankomat) 
+	public void add_buchungszeile (String in_column, Float in_menge, Float inBetrag, boolean isBankomat) 
 	{
 		System.out.println (in_column+" "+in_menge+" "+ inBetrag+" "+ isBankomat);
 		buchungen.add(new Buchungszeile());//ausformulieren
