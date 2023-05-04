@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Properties;
 
 /**
  * Lädt die Umbenennungstabelle, Format BezeichnungAutomat;PZN;Artikelname;Steuersatz
@@ -72,14 +75,25 @@ public class Umbenennung {
 	 */
 	public Artikel get (String inText)
 	{
-		return new Artikel ();
+		return artikelListe.get(inText);
+		//return new Artikel ();
 	}
 	
 	public static void main(String[] args) throws Exception 
 	{
 		
+		Properties prop = new Properties();
+		String fileName = "src/settings/app.config";
+		try (FileInputStream fis = new FileInputStream(fileName)) {
+		    prop.load(fis);
+		} catch (FileNotFoundException ex) {
+		    
+		} catch (IOException ex) {
+		    
+		}
+		String umbenenner_filename = prop.getProperty("umbenenner.filename");
 		
-		Umbenennung umbenennung = new Umbenennung ("Automator/src/Lagerbeschreibung_Automat.csv");
+		Umbenennung umbenennung = new Umbenennung (umbenenner_filename);
 	}
 
 }

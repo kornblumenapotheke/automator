@@ -5,6 +5,7 @@ import java.io.IOException;
 public class Datei {
 	
 	String machineID = "NIX";
+	String zeit="NIX";
 	double umsatz_gesamt = 0.00;
 	double bankomat_gesamt = 0.00;
 	double bargeld_gesamt = 0.00;
@@ -24,13 +25,26 @@ public class Datei {
 	        br = new BufferedReader(fr);
 	        String l;
 	        String separator ="\t";
+	        // Erste Zeile ist die ID der Machine
+	        
 	        machineID=br.readLine();
 	        int posID=machineID.indexOf("VND");
 	        machineID=machineID.substring(posID);
 	        System.out.println ("ID MACHINE: "+machineID);
+	        br.readLine();
 	        
+	        //Auslesezeit 
+	        String zeit_tmp=br.readLine();
+	        zeit=zeit_tmp.substring(8,18);
+	        zeit=zeit+"_"+zeit_tmp.substring(28);
+	        zeit=zeit.replace(":","_");
+	        zeit=zeit.replace("/","_");
+	        System.out.println ("ZEIT:" + zeit);
 	        
-	        boolean bankomat_1_done = false;
+	        //Datei sichern in entsprechendes Verzeichnis
+	        
+	        boolean bankomat_1_done = false; // Es gibt zwei Bankomateinträge. 1 ist der für normale Kunden, der insteresiert.
+	        
 	        while ((l = br.readLine()) != null)
 	        {
 	        if (l.indexOf("Gesamtbetrag aller Verkäufe seit letzter Ablesung")!=-1)
@@ -56,17 +70,21 @@ public class Datei {
 	        	while ((l = br.readLine()) != null) //jeden Artikel auswerten
 	        	{
 	        		 String[] col = l.split(separator);
-	        		 String artikelID= col [0];
-	        		 String einzelpreis=col[1];
-	        		 String anzahl_abgaben=col[3];
-	        		 String betrag_umsatz=col[5];
+	        		 String string_artikelID= col [0];
+	        		 String string_einzelpreis=col[1];
+	        		 String string_anzahl_abgaben=col[3];
+	        		 String string_betrag_umsatz=col[5];
 	        		 
-	        		 System.out.println ("Artikel: "+artikelID+" AVP "+einzelpreis + " verkauft: " +anzahl_abgaben+" gesamtbetrag: " +betrag_umsatz);
+	        		 System.out.println ("Artikel: "+string_artikelID+" AVP "+string_einzelpreis + " verkauft: " +string_anzahl_abgaben+" gesamtbetrag: " +string_betrag_umsatz);
 	        		 
-	        		 //Buchungszeile hinzufügen wenn was verkauft wurde
-	        		 buchungen.add_buchungszeile(artikelID, anzahl_abgaben, betrag_umsatz, false);
+	        		 if (Double.parseDouble(string_anzahl_abgaben) > 0.0) //Buchungszeile hinzufügen wenn was verkauft wurde
+	        		 {
+	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false);
+	        		 }
+	        		// buchungen.add_buchungszeile(artikelID, anzahl_abgaben, betrag_umsatz, false);
 	        		 
 	        	}
+	        	System.out.println ("INTERESSANTE BUCHUNGEN: "+buchungen.size());
 	        	
 	        	
 	        }
@@ -90,6 +108,7 @@ public class Datei {
 		}
 		catch (Exception e)
 		{
+			System.out.println (e.toString());
 			
 		}
 	}

@@ -3,7 +3,7 @@ public class Buchungszeile
 {
 	 String pos;
 	 String pzn;
-	 String menge;
+	 Double menge;
 	 String bezeichnung;
 	 String preis_brutto; //mit KOMMA
 	 String preis_netto; //mit KOMMA
@@ -14,7 +14,7 @@ public class Buchungszeile
 	Buchungszeile ()
 	{
 		pzn = "XXX";
-		menge= "XXX";
+		menge= 0.0;
 		preis_brutto = "XXX";
 		preis_netto = "XXX";
 		steuersatz = "123";
@@ -22,7 +22,7 @@ public class Buchungszeile
 		
 	}
 	
-	Buchungszeile (String inPos, String in_betrag, String in_menge, String in_is_bankomat) throws Exception
+	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat) throws Exception
 	{
 
 		pos=inPos;
@@ -43,7 +43,7 @@ public class Buchungszeile
 	{
 		return pzn;
 	}
-	public String getMenge ()
+	public Double getMenge ()
 	{
 		return menge;
 	}

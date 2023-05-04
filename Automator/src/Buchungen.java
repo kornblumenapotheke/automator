@@ -10,10 +10,18 @@ public class Buchungen
 		header += in_header+"\n";
 		//System.out.println (header);
 	}
-	public void add_buchungszeile (String in_column, Float in_menge, Float inBetrag, boolean isBankomat) 
+	/**
+	 * 
+	 * @param in_column Position im Gerät
+	 * @param in_menge verkaufte Menge
+	 * @param inBetrag gesamtbetrag
+	 * @param isBankomat ist_bankomat?
+	 * @throws Exception 
+	 */
+	public void add_buchungszeile (String in_column, Double in_menge, Double inBetrag, boolean isBankomat) throws Exception 
 	{
 		System.out.println (in_column+" "+in_menge+" "+ inBetrag+" "+ isBankomat);
-		buchungen.add(new Buchungszeile());//ausformulieren
+		buchungen.add(new Buchungszeile(in_column, in_menge, inBetrag,isBankomat));//ausformulieren
 	}
 
 	public String return_bar_csv ()
@@ -34,8 +42,13 @@ public class Buchungen
 		for (int i = 0;i<buchungen.size();i++)
 		{
 			Buchungszeile buchungszeile = buchungen.get(i);
-			buchungszeile.
+			
 			
 		}
+		return "XX";
+	}
+	public int size()
+	{
+		return buchungen.size();
 	}
 }
