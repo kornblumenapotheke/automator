@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Datei {
 	
@@ -92,6 +95,10 @@ public class Datei {
 	        	}
 	        	System.out.println ("INTERESSANTE BUCHUNGEN: "+buchungen.size());
 	        	
+	        	//jetzt noch Sicherung erstellen.
+	        	Path src=Paths.get("D:\\AUDIT.txt");
+	        	Path dest=Paths.get("D:\\"+machineID+"_"+zeit+"_AUDIT.txt");
+	        	Files.copy(src, dest);
 	        	
 	        }
 	        
@@ -109,6 +116,7 @@ public class Datei {
 		try
 		{
 			Buchungen return_buchungen = datei.readFile("D:\\AUDIT.txt");
+			//datei.copyFile("D:\\AUDIT.txt", "D:\\xxx\\"+datei.getMachineID()+"_"+datei.getZeit()+"AUDIT.txt");
 			System.out.println(return_buchungen.getText());
 			
 		}
@@ -118,6 +126,17 @@ public class Datei {
 			
 		}
 	}
+	
+	private String getZeit() {
+		// TODO Auto-generated method stub
+		return zeit;
+	}
+
+	private String getMachineID() {
+		// TODO Auto-generated method stub
+		return machineID;
+	}
+
 	/**
 	 * speichert das errechnete CSV in das entsprechende Verzeichnis
 	 */
