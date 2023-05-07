@@ -46,13 +46,13 @@ public class Start {
 		JTextArea text = new JTextArea();
 		JScrollPane scroll = new JScrollPane (text, 
 		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scroll.setSize(500, 500);
+		scroll.setSize(500, 1000);
 
 		frame.add(scroll);
 		//panel.add(scroll);
 		frame.getContentPane().add(panel);
 		frame.setVisible(true);
-		frame.setSize(500, 500);
+		frame.setSize(500, 1500);
 		frame.setLocation(loc_output_1);
 		frame.setTitle("Ergebnis");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

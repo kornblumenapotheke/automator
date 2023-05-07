@@ -8,6 +8,8 @@ public class Buchungszeile
 	 String preis_brutto; //mit KOMMA
 	 String preis_netto; //mit KOMMA
 	 String steuersatz; //in Prozent
+	 Double betrag_automat;
+	 Artikel artikel;
 	 boolean ist_bankomat; //handelt es sich um eine bankomatzahlung?
 	 Umbenennung umbenennung;
 	
@@ -27,11 +29,12 @@ public class Buchungszeile
 
 		pos=inPos;
 		umbenennung= new Umbenennung("D:\\Lagerbeschreibung_Automat.csv");
-		Artikel artikel = umbenennung.get(inPos);
+		artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();
 		menge=in_menge;
 		ist_bankomat = in_is_bankomat;
+		betrag_automat=in_betrag;
 		
 		//finde steuersatz
 		//berechne nettowert		
@@ -59,6 +62,12 @@ public class Buchungszeile
 	public String getSteuersatz()
 	{
 		return steuersatz;
+	}
+
+	public String getTextZusammenfassung() {
+
+		return pos+"\t"+menge+"Stk \t"+pzn+"\t"+artikel.get_artikelname()+"\t à"+preis_netto+"\t("+steuersatz+")Prozent\t"+preis_brutto+"brutto\t=\t"+betrag_automat;
+		
 	}
 	
 	

@@ -43,10 +43,11 @@ public class Buchungen
 		for (int i = 0;i<buchungen.size();i++)
 		{
 			Buchungszeile buchungszeile = buchungen.get(i);
+			text+=buchungszeile.getTextZusammenfassung()+"\n";
 			
 			
 		}
-		return "XX";
+		return text;
 	}
 	public int size()
 	{

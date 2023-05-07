@@ -134,6 +134,7 @@ public class Datei {
 	public void getZusammenfassung() {
 		// TODO Auto-generated method stub
 		//drucke die relevanten positionen am bildschirm aus.
+		System.out.println (buchungen.getText());
 		
 	}
 
