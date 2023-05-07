@@ -25,32 +25,21 @@ import javax.swing.JTextArea;
 public class Start {
 	
 	private static Buchungen buchungen ;
-
+	private static Settings settings;  
 	public static void main(String[] args) throws Exception 
 	{
 		buchungen = new Buchungen();
+		 settings  = Settings.getInstance();
 		//Fenster generieren
-		Preferences pref = Preferences.userNodeForPackage(Start.class);
 		
-		String newValue = "D:\\\\owncloud\\\\1_APOTHEKE_Grafenstein_GZ\\\\LAUFENDER_BETRIEB\\\\Dokumente\\\\Impfstation Poggersdorf\\Archiv\\2022-01";
-		String filename_selected = "";
-		String file_path=newValue;
+		
+		
 		
 		//Point loc_filechooser = new Point (100,100);
 		Point loc_output_1 = new Point (100,200);
 		Point loc_output_2 = new Point (600,200);
 		
 		//load settings
-		if (pref.get("path", "empty")=="empty")
-		{
-			System.out.println ("Node does not exist...");
-			pref.put("path", newValue);
-		
-		}
-		file_path=pref.get("path","empty");
-		loc_output_1 = new Point(Integer.valueOf(pref.get("output_1_x","100")),Integer.valueOf(pref.get("output_1_y","100")));
-		loc_output_2 = new Point(Integer.valueOf(pref.get("output_2_x","600")),Integer.valueOf(pref.get("output_2_y","100")));
-		//System.out.println (pref.get("filechooserx","XX100"));
 		
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
@@ -90,7 +79,26 @@ public class Start {
 		JFrame frame2 = new JFrame();
 		JPanel panel2 = new JPanel();
 		JButton button_ritti = new JButton ("Ritti");
+		//Actionlistener hinbzufügen
+		button_ritti.addActionListener(e->{
+			try {
+				rittiButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		//info ob Ritte oder Korni als Globale Variable??
 		JButton button_korni = new JButton ("Korni");
+		button_korni.addActionListener(e->{
+			try {
+				korniButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		//info ob Ritte oder Korni als Globale Variable??
 		button_ritti.setBackground(Color.cyan);
 		button_korni.setBackground(Color.gray);
 		panel2.setLayout(new GridLayout(2,2));
@@ -104,54 +112,34 @@ public class Start {
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.setVisible(true);
 		
-		
-		
-		
-		
-		
-		
-    
-        
-        //Datei öffnen
-        BufferedReader br = null;
-        FileReader fr = null;
-        fr = new FileReader(filename_selected);
-        br = new BufferedReader(fr);
-        String l;
-        String separator ="\t";
-        
-        while (!(l=br.readLine()).contains("Column"))
-        {
-        	buchungen.add_header(l);        	
-        }
-        
-        while ((l = br.readLine()) != null)
-        {
-            // Zeilen anhand des Separators,
-            // z.B. ";", aufsplitten
-            String[] col = l.split(separator);
-            //System.out.println ("IN: "+l);
-            String column = col[0];
-            String einzelpreis = col[1];
-            String gesamt_verkaeufe =col[2];
-            String zaehler_verkaeufe =col[3];
-            String gesamtbetrag =col[4];
-            String bargeld = col[5];
-            Float bankomat_menge = (Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld))/Float.valueOf(einzelpreis);
-            Float bankomat_betrag= Float.valueOf(gesamtbetrag)-Float.valueOf(bargeld);
-            Float bar_menge=Float.valueOf(bargeld)/Float.valueOf(einzelpreis);
-            Float bar_betrag=Float.valueOf(bargeld);
-            String subcolumn = column.length() > 2 ? column.substring(column.length() - 2) : column;
-            if (bar_menge > 0.1)
-            		buchungen.add_buchungszeile(subcolumn, bar_menge, bar_betrag, false);
-            if (bankomat_menge > 0.1)
-            		buchungen.add_buchungszeile(subcolumn, bankomat_menge, bankomat_betrag, true);            
-        }
-        System.out.println (buchungen.get_header());
-        
+		       
 		//importieren
 		//exportieren
 
+	}
+
+	private static Object korniButtonPressed() throws Exception {
+		// TODO Auto-generated method stub
+		//parameter korni laden
+		//Dann ab die post
+		System.out.println ("KORNI SELECTED");
+		Datei datei = new Datei();
+		datei.readFile(settings.get("audit_file_korni"));
+		datei.save_csv("");
+		datei.getZusammenfassung();
+		return null;
+	}
+
+	private static Object rittiButtonPressed() throws Exception {
+		// TODO Auto-generated method stub
+		//parameter korni laden
+		//Dann ab die post
+		System.out.println ("RITTI SELECTED");
+		Datei datei = new Datei();
+		datei.readFile(settings.get("audit_file_ritti"));
+		datei.save_csv("");
+		datei.getZusammenfassung();
+		return null;
 	}
 
 }

@@ -26,7 +26,7 @@ public class Buchungszeile
 	{
 
 		pos=inPos;
-		umbenennung= new Umbenennung("D:\\owncloud\\1_APOTHEKE_Grafenstein_GZ\\LAUFENDER_BETRIEB\\Finanzen\\Automat Grafenstein\\Lagerbeschreibung_Automat.csv");
+		umbenennung= new Umbenennung("D:\\Lagerbeschreibung_Automat.csv");
 		Artikel artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();

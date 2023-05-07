@@ -56,7 +56,7 @@ public class Umbenennung {
 	            // z.B. ";", aufsplitten
 	            String[] col = l.split(separator);
 	            artikelListe.put(col[0],new Artikel(col[0],col[1],col[2],col[3],col[4]));
-	            System.out.println(artikelListe.get(col[0]).getCSV());
+	          //  System.out.println(artikelListe.get(col[0]).getCSV());
 	            
 	        }
 	        br.close();
@@ -75,7 +75,10 @@ public class Umbenennung {
 	 */
 	public Artikel get (String inText)
 	{
-		return artikelListe.get(inText);
+		if (artikelListe.get(inText)!=null)
+			return artikelListe.get(inText);
+		else
+			return new Artikel(); //leerer Aertikel
 		//return new Artikel ();
 	}
 	

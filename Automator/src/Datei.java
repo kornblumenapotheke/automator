@@ -17,6 +17,12 @@ public class Datei {
 		
 	}
 	
+	/**
+	 * liest ein file ein und speichert es dann unter einem qualifizeirten namen wieder ab.
+	 * @param inDateiname
+	 * @return
+	 * @throws Exception
+	 */
 	public Buchungen readFile (String inDateiname) throws Exception
 	{
 		    BufferedReader br = null;
@@ -111,6 +117,24 @@ public class Datei {
 			System.out.println (e.toString());
 			
 		}
+	}
+	/**
+	 * speichert das errechnete CSV in das entsprechende Verzeichnis
+	 */
+
+	public void save_csv(String in_filename) {
+		// TODO Auto-generated method stub
+		
+		//speichere das erstellte csv in datei.
+	}
+
+	/**
+	 * gibt die Zusammenfassung am Bildschirm aus.
+	 */
+	public void getZusammenfassung() {
+		// TODO Auto-generated method stub
+		//drucke die relevanten positionen am bildschirm aus.
+		
 	}
 
 }

@@ -21,7 +21,8 @@ public class Buchungen
 	public void add_buchungszeile (String in_column, Double in_menge, Double inBetrag, boolean isBankomat) throws Exception 
 	{
 		System.out.println (in_column+" "+in_menge+" "+ inBetrag+" "+ isBankomat);
-		buchungen.add(new Buchungszeile(in_column, in_menge, inBetrag,isBankomat));//ausformulieren
+		buchungen.add(new Buchungszeile(in_column,inBetrag, in_menge, isBankomat));//ausformulieren
+		
 	}
 
 	public String return_bar_csv ()
