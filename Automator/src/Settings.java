@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -14,7 +16,9 @@ public class Settings {
 	 /**
 	  * 
 	  */
-	 private static String filename_settings="src/settings/app.config";
+	 private static String package_filename_settings="src/settings/app.config"; //lokale settings
+	 private static String filename_settings="app.config";
+	 
 	 
 	  static {
 	    instance = new Settings();
@@ -23,14 +27,25 @@ public class Settings {
 	  private Settings() { 
 
 		    prop = new Properties();
+		    String user_home = System.getProperty("user.home");
+		    
+		    //prüfe ob settings bereits extistiert
+		    
+		    //nein, dann copy from package
+		    
+		   
+				 
 			
-			try (FileInputStream fis = new FileInputStream(filename_settings)) {
+			
+		    
+			try (FileInputStream fis = new FileInputStream(package_filename_settings)) {
 			    prop.load(fis);
 				} 
 				catch (Exception ex) {
 					System.out.println (ex.toString());
 			    
 				} 
+				 
 			
 	  }    
 

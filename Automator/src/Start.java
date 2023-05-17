@@ -29,7 +29,7 @@ public class Start {
 	public static void main(String[] args) throws Exception 
 	{
 		buchungen = new Buchungen();
-		 settings  = Settings.getInstance();
+		settings  = Settings.getInstance();
 		//Fenster generieren
 		
 		

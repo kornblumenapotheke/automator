@@ -1,9 +1,16 @@
 import java.io.BufferedReader;
+import javax.swing.JFrame;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
+//import org.mariadb.jdbc.Statement;
 
 public class Datei {
 	
@@ -28,18 +35,25 @@ public class Datei {
 	 */
 	public Buchungen readFile (String inDateiname) throws Exception
 	{
+			Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+			boolean bereitsGelesen =false;
+			String transaction_key_id ="";
 		    BufferedReader br = null;
 	        FileReader fr = null;
 	        fr = new FileReader(inDateiname);
 	        br = new BufferedReader(fr);
+	        String sql = "";
 	        String l;
 	        String separator ="\t";
 	        // Erste Zeile ist die ID der Machine
+	        
 	        
 	        machineID=br.readLine();
 	        int posID=machineID.indexOf("VND");
 	        machineID=machineID.substring(posID);
 	        System.out.println ("ID MACHINE: "+machineID);
+	      //jetzt noch Sicherung erstellen.
+        	
 	        br.readLine();
 	        
 	        //Auslesezeit 
@@ -49,6 +63,53 @@ public class Datei {
 	        zeit=zeit.replace(":","_");
 	        zeit=zeit.replace("/","_");
 	        System.out.println ("ZEIT:" + zeit);
+	        transaction_key_id=machineID+"_"+zeit;
+	        Path src=Paths.get(inDateiname);
+        	Path dest=Paths.get("F:\\"+machineID+"_"+zeit+"_AUDIT.txt");
+        	try
+        	{
+        		Files.copy(src, dest);
+        	}
+        	catch (Exception e)
+        	{
+        		JFrame frame = new JFrame(); 
+        		JOptionPane.showMessageDialog(frame, "Datei wurde bereits eingelesen!Keine Sicherungskopie!");
+        		bereitsGelesen=true;
+        	}
+        	
+        	//datenbank abfragen nach id
+        	Statement statement = con.createStatement();
+        	sql="SELECT * from KeyRead where (key_stick=\'"+transaction_key_id+"\');";
+        	ResultSet result = statement.executeQuery(sql);
+        	String day = new SimpleDateFormat("dd.MM.yyyy").format(Calendar.getInstance().getTime());
+		    String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        	if (result.next() == false)
+        	{
+            	//existiert nicht
+            	//eintragen
+        	sql="INSERT INTO KeyRead VALUES (\'\',\'"+transaction_key_id+"\',\'"+day+"\',\'"+time+"\');";
+        	
+        	statement = con.createStatement();
+        	try
+        	{
+        		statement.executeUpdate(sql);
+        	}
+        	catch (Exception e)
+        	{
+        		
+        	}
+        	System.out.println(sql);
+        	bereitsGelesen = false;
+            	//bereitsgelesen false
+
+        		
+        	}
+        	else 
+        	{
+        		bereitsGelesen=true;
+        		JFrame frame = new JFrame(); 
+        		JOptionPane.showMessageDialog(frame, "Datei wurde bereits eingelesen! Kein Eintrag in Datenbank!");
+        	}
 	        
 	        //Datei sichern in entsprechendes Verzeichnis
 	        
@@ -79,7 +140,7 @@ public class Datei {
 	        	while ((l = br.readLine()) != null) //jeden Artikel auswerten
 	        	{
 	        		 String[] col = l.split(separator);
-	        		 String string_artikelID= col [0];
+	        		 String string_artikelID= col[0].substring(7);
 	        		 String string_einzelpreis=col[1];
 	        		 String string_anzahl_abgaben=col[3];
 	        		 String string_betrag_umsatz=col[5];
@@ -89,16 +150,39 @@ public class Datei {
 	        		 if (Double.parseDouble(string_anzahl_abgaben) > 0.0) //Buchungszeile hinzufügen wenn was verkauft wurde
 	        		 {
 	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false);
+	        			
+	        			sql="";
+	        			sql+="\'\',";
+	     	        	sql+="\'"+machineID+"\',";
+	     	        	sql+="\'"+day+"\',";
+	     	        	sql+="\'"+time+"\',";
+	     	        	sql+="\'"+col[0]+"\',";
+	     	        	sql+="\'"+col[1]+"\',";
+	     	        	sql+="\'"+col[2]+"\',";
+	     	        	sql+="\'"+col[3]+"\',";
+	     	        	sql+="\'"+col[4]+"\',";
+	     	        	sql+="\'"+col[5]+"\',";
+	     	        	sql+="\'NOT IMPLEMENTED\',";
+	     	        	sql+="\'NOT IMPLEMENTED\'";
+	     	        	sql = "INSERT into FaelleStick VALUES ("+sql+");"; 
+	     	        	statement = con.createStatement();
+	     	        	if (!bereitsGelesen)
+	     	        		statement.executeUpdate(sql);
+	     	        	
+	     	        	
+	     	        	
 	        		 }
 	        		// buchungen.add_buchungszeile(artikelID, anzahl_abgaben, betrag_umsatz, false);
 	        		 
 	        	}
 	        	System.out.println ("INTERESSANTE BUCHUNGEN: "+buchungen.size());
 	        	
-	        	//jetzt noch Sicherung erstellen.
-	        	Path src=Paths.get("D:\\AUDIT.txt");
-	        	Path dest=Paths.get("D:\\"+machineID+"_"+zeit+"_AUDIT.txt");
-	        	Files.copy(src, dest);
+	        	
+	        	
+		        
+	        	
+	        	
+		        
 	        	
 	        }
 	        

@@ -28,7 +28,7 @@ public class Buchungszeile
 	{
 
 		pos=inPos;
-		umbenennung= new Umbenennung("D:\\Lagerbeschreibung_Automat.csv");
+		umbenennung= new Umbenennung("f:\\\\Lagerbeschreibung_Automat_korni.csv");
 		artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();
