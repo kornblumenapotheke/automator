@@ -98,12 +98,58 @@ public class Start {
 				e1.printStackTrace();
 			}
 		});
+		JButton button_korni_csv = new JButton ("Korni Belegung");
+		button_korni_csv.addActionListener(e->{
+			try {
+				//korniButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		JButton button_ritti_csv = new JButton ("Ritti Belegung");
+		button_korni_csv.addActionListener(e->{
+			try {
+				//korniButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		JButton button_korni_refill = new JButton ("Korni Refill");
+		button_korni_csv.addActionListener(e->{
+			try {
+				//korniButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		JButton button_ritti_refill = new JButton ("Ritti Refill");
+		button_korni_csv.addActionListener(e->{
+			try {
+				//korniButtonPressed();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		//info ob Ritte oder Korni als Globale Variable??
 		button_ritti.setBackground(Color.cyan);
 		button_korni.setBackground(Color.gray);
-		panel2.setLayout(new GridLayout(2,2));
+		button_korni_refill.setBackground(Color.yellow);
+		button_ritti_refill.setBackground(Color.yellow);
+		button_korni_csv.setBackground(Color.orange);
+		button_ritti_csv.setBackground(Color.orange);
+		panel2.setLayout(new GridLayout(5,5));
 		panel2.add(button_ritti);
 		panel2.add(button_korni);
+		panel2.add(button_korni_refill);
+		panel2.add(button_ritti_refill);
+		panel2.add(button_korni_csv);
+		panel2.add(button_ritti_csv);
+		
+		
 		frame2.getContentPane().add(panel2);
 		frame2.setVisible(true);
 		frame2.setSize(500, 500);
