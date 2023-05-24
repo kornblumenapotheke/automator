@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.*;
 import javax.swing.JFrame;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,13 +27,36 @@ public class Datei {
 	{
 		
 	}
-	public void copyEVA (String inDateiname)
+	
+	public void copyEVA (String inDateiname) throws Exception
 	{
-		//EVA öffnen
-		//EVA einfach parsen
-		//checken ob schon in DB
-		//nein ==> EVA sichern
-		//ja ==> Meldung EVA schon existent
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		boolean bereitsGelesen =false;
+		BufferedReader br = null;
+		String sha256 = FileSHA256.createSHA256(inDateiname);
+		//schauen ob schlüssel schon in db
+		Statement statement = con.createStatement();
+    	String sql="SELECT * from EVA where (SHA256=\'"+sha256+"\');";
+    	ResultSet result = statement.executeQuery(sql);
+    	if (result.next() == false) //leer, existiert noch nicht
+    	{
+    		//EVA öffnen
+    		//EVA einfach parsen
+    		//schreiben
+    		File file = new File(inDateiname);
+   			FileInputStream fis = new FileInputStream(file);
+   			PreparedStatement pstmt = con
+   					.prepareStatement("insert into EVA values ( \'\',\'DATUM\',\'ZEIT\',\'ID\', ?,\'"+sha256+"\')");
+   			pstmt.setBinaryStream(1, fis, (int) file.length());
+   			pstmt.executeUpdate();
+    	}
+		 
+    	else
+    	{
+    		JFrame frame = new JFrame(); 
+    		JOptionPane.showMessageDialog(frame, "EVA bereits in Datenbanl. Keine Sicherungskopie!");
+    		
+    	}
 			
 	}
 	
