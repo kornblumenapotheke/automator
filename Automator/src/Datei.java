@@ -49,12 +49,15 @@ public class Datei {
    					.prepareStatement("insert into EVA values ( \'\',\'DATUM\',\'ZEIT\',\'ID\', ?,\'"+sha256+"\')");
    			pstmt.setBinaryStream(1, fis, (int) file.length());
    			pstmt.executeUpdate();
+   			JFrame frame = new JFrame(); 
+    		JOptionPane.showMessageDialog(frame, "EVA in Datenbank GESICHERT!");
+    		
     	}
 		 
     	else
     	{
     		JFrame frame = new JFrame(); 
-    		JOptionPane.showMessageDialog(frame, "EVA bereits in Datenbanl. Keine Sicherungskopie!");
+    		JOptionPane.showMessageDialog(frame, "EVA bereits in Datenbank. Keine Sicherungskopie!");
     		
     	}
 			
