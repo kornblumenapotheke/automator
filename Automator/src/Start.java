@@ -170,9 +170,9 @@ public class Start {
 		//Dann ab die post
 		System.out.println ("KORNI SELECTED");
 		Datei datei = new Datei();
-		datei.readFile(settings.get("audit_file_korni"));
-		
+		datei.readFile(settings.get("audit_file_korni"));		
 		datei.save_csv("");
+		datei.copyEVA(settings.get("eva_file_korni"));
 		datei.getZusammenfassung();
 		return null;
 	}
@@ -185,6 +185,7 @@ public class Start {
 		Datei datei = new Datei();
 		datei.readFile(settings.get("audit_file_ritti"));
 		datei.save_csv("");
+		datei.copyEVA(settings.get("eva_file_ritti"));
 		datei.getZusammenfassung();
 		return null;
 	}

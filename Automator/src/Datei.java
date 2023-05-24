@@ -26,6 +26,15 @@ public class Datei {
 	{
 		
 	}
+	public void copyEVA (String inDateiname)
+	{
+		//EVA öffnen
+		//EVA einfach parsen
+		//checken ob schon in DB
+		//nein ==> EVA sichern
+		//ja ==> Meldung EVA schon existent
+			
+	}
 	
 	/**
 	 * liest ein file ein und speichert es dann unter einem qualifizeirten namen wieder ab.
