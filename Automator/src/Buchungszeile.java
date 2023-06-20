@@ -23,12 +23,30 @@ public class Buchungszeile
 		System.out.print("Falsche Initialisierung Buchungszeile!");
 		
 	}
-	
 	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat) throws Exception
 	{
 
 		pos=inPos;
 		umbenennung= new Umbenennung("f:\\\\Lagerbeschreibung_Automat_korni.csv");
+		artikel = umbenennung.get(inPos);
+		pzn = artikel.get_pzn();
+		steuersatz = artikel.get_steuersatz();
+		menge=in_menge;
+		ist_bankomat = in_is_bankomat;
+		betrag_automat=in_betrag;
+		
+		//finde steuersatz
+		//berechne nettowert		
+		
+		
+	}
+
+	
+	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat, String inProduktListe) throws Exception
+	{
+
+		pos=inPos;
+		umbenennung= new Umbenennung(inProduktListe);
 		artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();
@@ -65,8 +83,17 @@ public class Buchungszeile
 	}
 
 	public String getTextZusammenfassung() {
+		String text = "";
+		if (ist_bankomat==true)
+		{
+			text+="BANKO\t";
+		}
+		else
+		{
+			text +="CASH\t";
+		}
 
-		return pos+"\t"+menge+"Stk \t"+pzn+"\t"+artikel.get_artikelname()+"\t à"+preis_netto+"\t("+steuersatz+")Prozent\t"+preis_brutto+"brutto\t=\t"+betrag_automat;
+		return text + pos+"\t"+menge+"Stk \t"+pzn+"\t"+artikel.get_artikelname()+"\t à"+preis_netto+"\t("+steuersatz+")Prozent\t"+preis_brutto+"brutto\t=\t"+betrag_automat;
 		
 	}
 	

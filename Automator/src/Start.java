@@ -174,6 +174,7 @@ public class Start {
 		datei.save_csv("");
 		datei.copyEVA(settings.get("eva_file_korni"));
 		datei.getZusammenfassung();
+		datei.parseEVA(settings.get("eva_file_korni"),settings.get("umbenenner.filename_korni"));
 		return null;
 	}
 
@@ -187,6 +188,7 @@ public class Start {
 		datei.save_csv("");
 		datei.copyEVA(settings.get("eva_file_ritti"));
 		datei.getZusammenfassung();
+		datei.parseEVA(settings.get("eva_file_ritti"),settings.get("umbenenner.filename_ritti"));
 		return null;
 	}
 
