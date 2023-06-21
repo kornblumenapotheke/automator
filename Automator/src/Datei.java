@@ -280,6 +280,7 @@ public class Datei {
 	public void parseEVA(String in_EvaFile, String in_Produktliste) {
 		
 		EvaDtsParser eva = new EvaDtsParser(in_EvaFile, in_Produktliste);
+		eva.showtable ();
 		// TODO Auto-generated method stub
 		
 	}

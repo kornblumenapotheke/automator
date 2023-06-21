@@ -37,8 +37,8 @@ public class Umbenennung {
 		//csv lesen und Artikel anlegen
 		
 	}
-	
-	Umbenennung (String in_Filename) throws Exception
+	//ALTE VARIANTE WO VOM STICK EINGELESEN WIRD
+	 Umbenennung (String in_Filename) throws Exception
 	{
 		artikelListe = new HashMap<String, Artikel>();
 		num_artikelListe = new HashMap <Integer, Artikel>() ;
@@ -67,7 +67,38 @@ public class Umbenennung {
 		//file öffnen
 		//csv lesen und Artikel anlegen
 		
-	}
+	} 
+	//LIEST DIREKT AUS DER DB
+	/** Umbenennung (String in_machineID) throws Exception
+	{
+		artikelListe = new HashMap<String, Artikel>();
+		num_artikelListe = new HashMap <Integer, Artikel>() ;
+		    BufferedReader br = null;
+	        FileReader fr = null;
+	        fr = new FileReader(in_Filename);
+	        br = new BufferedReader(fr);
+	        String l;
+	        String separator =";";
+	        
+	        
+	        while ((l = br.readLine()) != null)
+	        {
+	            // Zeilen anhand des Separators,
+	            // z.B. ";", aufsplitten
+	            String[] col = l.split(separator);
+	            artikelListe.put(col[0],new Artikel(col[0],col[1],col[2],col[3],col[4]));
+	          //  System.out.println(artikelListe.get(col[0]).getCSV());
+	            
+	        }
+	        br.close();
+	        System.out.println ("INIT ARTIKELLISTE"+artikelListe.size());
+	        
+	        
+		
+		//file öffnen
+		//csv lesen und Artikel anlegen
+		
+	} **/
 	/**
 	 * Gibt Artikelobjekt zur entsprechenden internen Bezeichnung retour.
 	 * @param inText

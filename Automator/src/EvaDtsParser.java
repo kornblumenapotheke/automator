@@ -92,6 +92,16 @@ public class EvaDtsParser {
 			stand_010_euro=matcher.group(1);			
 			}
 		
+		EvaInfoWindow evaInfoWindow = new EvaInfoWindow ();
+		evaInfoWindow.set2Euro (stand_2_euro);
+		evaInfoWindow.set1Euro (stand_1_euro);
+		evaInfoWindow.set50Cent (stand_050_euro);
+		evaInfoWindow.set20Cent (stand_020_euro);
+		evaInfoWindow.set10Cent (stand_010_euro);
+		evaInfoWindow.setMachineID (machineID);
+		
+		evaInfoWindow.show();
+		
 		//hier jetzt treffer suchen
 		
 		String lines[] = last_transaction.split(System.getProperty("line.separator"));
@@ -215,6 +225,23 @@ public class EvaDtsParser {
 	{
 	EvaDtsParser eva = new EvaDtsParser("F:\\10_14061\\EVA_READ.VID","f:\\\\Lagerbeschreibung_Automat_korni.csv"); 	
 
+	}
+
+	public void showtable() {
+		
+		EVATable evatable = new EVATable();
+		
+		
+		for (int i=0;i<buchungen.size();i++)
+		{
+			Buchungszeile buchungszeile = buchungen.get(i);
+			evatable.addRow(buchungszeile.getZahlungsweise(), buchungszeile.getMenge(), buchungszeile.getPzn(), buchungszeile.getProdukt(), buchungszeile.getEP(), buchungszeile.getSumme());
+			
+			
+		}
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 }

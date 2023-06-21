@@ -1,14 +1,14 @@
 import java.awt.Color;
+import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -98,19 +98,19 @@ public class Start {
 				e1.printStackTrace();
 			}
 		});
-		JButton button_korni_csv = new JButton ("Korni Belegung");
+		JButton button_korni_csv = new JButton ("Korni Belegung laden");
 		button_korni_csv.addActionListener(e->{
 			try {
-				//korniButtonPressed();
+				korniBelegungPressed();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
-		JButton button_ritti_csv = new JButton ("Ritti Belegung");
-		button_korni_csv.addActionListener(e->{
+		JButton button_ritti_csv = new JButton ("Ritti Belegung laden");
+		button_ritti_csv.addActionListener(e->{
 			try {
-				//korniButtonPressed();
+				rittiBelegungPressed();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -162,6 +162,61 @@ public class Start {
 		//importieren
 		//exportieren
 
+	}
+
+	private static void rittiBelegungPressed() throws Exception {
+		String machineID=settings.get("machineId.ritti");
+		//file laden
+		String umbenenner_file_name = settings.get("umbenenner.filename_ritti");
+		
+		File file = new File(umbenenner_file_name);
+		FileInputStream fis=null;;		
+		fis = new FileInputStream(file);		
+		byte[] data = new byte[(int) file.length()];		
+		fis.read(data);		
+		fis.close();		
+		String csv = new String(data, "UTF-8");
+		//datenbank alle alten auf invalid
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		String sql = "";
+		Statement statement = con.createStatement();
+    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
+    	statement.executeUpdate(sql);    	
+		//dieses schreiben
+    	PreparedStatement pstmt = con.prepareStatement(
+    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
+    	pstmt.setString(1, machineID);
+    	pstmt.setString(2, csv);
+    	pstmt.setString(3, "???");
+    	pstmt.execute();
+		
+	}
+
+	private static void korniBelegungPressed() throws Exception {
+		String machineID=settings.get("machineId.korni");
+		//file laden
+		String umbenenner_file_name = settings.get("umbenenner.filename_korni");
+		
+		File file = new File(umbenenner_file_name);
+		FileInputStream fis=null;;		
+		fis = new FileInputStream(file);		
+		byte[] data = new byte[(int) file.length()];		
+		fis.read(data);		
+		fis.close();		
+		String csv = new String(data, "UTF-8");
+		//datenbank alle alten auf invalid
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		String sql = "";
+		Statement statement = con.createStatement();
+    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
+    	statement.executeUpdate(sql);    	
+		//dieses schreiben
+    	PreparedStatement pstmt = con.prepareStatement(
+    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
+    	pstmt.setString(1, machineID);
+    	pstmt.setString(2, csv);
+    	pstmt.setString(3, "???");
+    	pstmt.execute();
 	}
 
 	private static Object korniButtonPressed() throws Exception {

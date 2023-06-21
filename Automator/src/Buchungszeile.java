@@ -64,9 +64,9 @@ public class Buchungszeile
 	{
 		return pzn;
 	}
-	public Double getMenge ()
+	public String getMenge ()
 	{
-		return menge;
+		return Double.toString(menge);
 	}
 	public String getPreisBrutto()
 	{
@@ -95,6 +95,31 @@ public class Buchungszeile
 
 		return text + pos+"\t"+menge+"Stk \t"+pzn+"\t"+artikel.get_artikelname()+"\t à"+preis_netto+"\t("+steuersatz+")Prozent\t"+preis_brutto+"brutto\t=\t"+betrag_automat;
 		
+	}
+	public String getZahlungsweise() {
+		// TODO Auto-generated method stub
+		if (ist_bankomat==true)
+		{
+			return "BANKO\t";
+		}
+		else
+		{
+			return "CASH\t";
+		}
+		
+		
+	}
+	public String getProdukt() {
+		// TODO Auto-generated method stub
+		return artikel.get_artikelname();
+	}
+	public String getEP() {
+		// TODO Auto-generated method stub
+		return artikel.getBrutto();
+	}
+	public String getSumme() {
+		// TODO Auto-generated method stub
+		return Double.toString(betrag_automat);
 	}
 	
 	
