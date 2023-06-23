@@ -224,12 +224,14 @@ public class Start {
 		//parameter korni laden
 		//Dann ab die post
 		System.out.println ("KORNI SELECTED");
+		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.korni"));
 		Datei datei = new Datei();
-		datei.readFile(settings.get("audit_file_korni"),settings.get("machineId.korni"));		
+		datei.readFile(settings.get("audit_file_korni"),umbenennung);		
 		datei.save_csv("");
 		datei.copyEVA(settings.get("eva_file_korni"));
 		datei.getZusammenfassung();
-		datei.parseEVA(settings.get("eva_file_korni"),settings.get("machineId.korni"));
+		
+		datei.parseEVA(settings.get("eva_file_korni"),umbenennung);
 		return null;
 	}
 
@@ -237,13 +239,15 @@ public class Start {
 		// TODO Auto-generated method stub
 		//parameter korni laden
 		//Dann ab die post
+		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.ritti"));
 		System.out.println ("ritti SELECTED");
 		Datei datei = new Datei();
-		datei.readFile(settings.get("audit_file_ritti"),settings.get("machineId.ritti"));		
+		datei.readFile(settings.get("audit_file_ritti"),umbenennung);		
 		datei.save_csv("");
 		datei.copyEVA(settings.get("eva_file_ritti"));
 		datei.getZusammenfassung();
-		datei.parseEVA(settings.get("eva_file_ritti"),settings.get("machineId.ritti"));
+		
+		datei.parseEVA(settings.get("eva_file_ritti"),umbenennung);
 		return null;
 	}
 

@@ -16,11 +16,13 @@ public class EvaDtsParser {
 	String stand_050_euro="0";
 	String stand_020_euro="0";
 	String stand_010_euro="0";
+	Umbenennung umbenennung = null;
 	
 	MyArrayList<Buchungszeile> buchungen = new MyArrayList<Buchungszeile> ();
 	
-	EvaDtsParser (String inFile, String inProduktliste)
+	EvaDtsParser (String inFile, Umbenennung in_umbenennung)
 	{
+		umbenennung = in_umbenennung;
 		Pattern pattern_machineID =Pattern.compile("CB1[*](.*?)[*]");
 		Pattern pattern_machineModel =Pattern.compile("CB1[*].*[*](.*?)[*]");	
 		Pattern pattern_machineBuild =Pattern.compile("CB1[*].*[*].*[*](.*$?)");
@@ -140,7 +142,7 @@ public class EvaDtsParser {
 					}
 				
 				try {
-					buchungen.add(new Buchungszeile(column, Double.parseDouble(betrag)/100, Double.parseDouble(anzahl), true, inProduktliste));
+					buchungen.add(new Buchungszeile(column, Double.parseDouble(betrag)/100, Double.parseDouble(anzahl), true, umbenennung));
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -182,7 +184,7 @@ public class EvaDtsParser {
 					}
 				
 				try {
-					buchungen.add(new Buchungszeile(column, Double.parseDouble(betrag)/100, Double.parseDouble(anzahl), false,inProduktliste));
+					buchungen.add(new Buchungszeile(column, Double.parseDouble(betrag)/100, Double.parseDouble(anzahl), false,umbenennung));
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

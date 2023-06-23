@@ -22,26 +22,6 @@ public class Umbenennung {
 	HashMap <String, Artikel> artikelListe;  
 	HashMap <Integer, Artikel> num_artikelListe;
 	
-	Umbenennung (String in_Filename, boolean is_test)
-	{
-		artikelListe = new HashMap<String, Artikel>();
-		num_artikelListe = new HashMap <Integer, Artikel>() ;
-		artikelListe.put("TEST", new Artikel ("TEST","TEST","TEST","TEST","TEST"));
-		artikelListe.put("TEST1", new Artikel ("TEST1","TEST1","TEST1","TEST1","TEST1"));
-		System.out.println("ADDED");
-		System.out.println("SIZE "+artikelListe.size());
-		 for (int i = 0;i<artikelListe.size();i++)
-	        {
-	        	System.out.println(artikelListe.toString());
-	        }
-		 System.out.println(artikelListe.get("TEST").getCSV());
-		 System.out.println(artikelListe.get("TEST1").getCSV());
-		
-		
-		//file öffnen
-		//csv lesen und Artikel anlegen
-		
-	}
 	/**
 	//ALTE VARIANTE WO VOM STICK EINGELESEN WIRD
 	 Umbenennung (String in_Filename) throws Exception
@@ -77,6 +57,7 @@ public class Umbenennung {
 	//LIEST DIREKT AUS DER DB
 	 Umbenennung (String in_machineID) throws Exception
 	{
+		 System.out.println ("UMBENENNER MACHINE ID REQUEST:" + in_machineID);
 		 
 		//Hole aus DB CSV mit der machine ID und is valid
 		
@@ -162,9 +143,9 @@ public class Umbenennung {
 		} catch (IOException ex) {
 		    
 		}
-		String umbenenner_filename = prop.getProperty("machineId.korni");
-		
+		String umbenenner_filename = prop.getProperty("machineId.ritti");
 		Umbenennung umbenennung = new Umbenennung (umbenenner_filename);
+		System.out.println ("UMBENENNUNG DONE:\n");
 	}
 
 }

@@ -69,7 +69,7 @@ public class Datei {
 	 * @return
 	 * @throws Exception
 	 */
-	public Buchungen readFile (String inDateiname, String in_machineID) throws Exception
+	public Buchungen readFile (String inDateiname, Umbenennung in_umbenennung) throws Exception
 	{
 			Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
 			boolean bereitsGelesen =false;
@@ -184,7 +184,7 @@ public class Datei {
 	        		 
 	        		 if (Double.parseDouble(string_anzahl_abgaben) > 0.0) //Buchungszeile hinzufügen wenn was verkauft wurde
 	        		 {
-	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false, in_machineID);
+	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false, in_umbenennung);
 	        			
 	        			sql="";
 	        			sql+="\'\',";
@@ -235,9 +235,9 @@ public class Datei {
 		Datei datei = new Datei ();
 		try
 		{
-			Buchungen return_buchungen = datei.readFile("D:\\AUDIT.txt","TEST");
+		//	Buchungen return_buchungen = datei.readFile("D:\\AUDIT.txt","TEST");
 			//datei.copyFile("D:\\AUDIT.txt", "D:\\xxx\\"+datei.getMachineID()+"_"+datei.getZeit()+"AUDIT.txt");
-			System.out.println(return_buchungen.getText());
+			//System.out.println(return_buchungen.getText());
 			
 		}
 		catch (Exception e)
@@ -277,9 +277,9 @@ public class Datei {
 		
 	}
 
-	public void parseEVA(String in_EvaFile, String in_Produktliste) {
+	public void parseEVA(String in_EvaFile, Umbenennung in_umbenennung) {
 		
-		EvaDtsParser eva = new EvaDtsParser(in_EvaFile, in_Produktliste);
+		EvaDtsParser eva = new EvaDtsParser(in_EvaFile, in_umbenennung);
 		eva.showtable ();
 		// TODO Auto-generated method stub
 		

@@ -42,11 +42,11 @@ public class Buchungszeile
 	}**/
 
 	
-	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat, String inProduktListe) throws Exception
+	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat, Umbenennung in_umbenennung) throws Exception
 	{
 
 		pos=inPos;
-		umbenennung= new Umbenennung(inProduktListe);
+		umbenennung=in_umbenennung;
 		artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();
