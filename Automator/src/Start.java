@@ -26,7 +26,97 @@ public class Start {
 	
 	private static Buchungen buchungen ;
 	private static Settings settings;  
-	public static void main(String[] args) throws Exception 
+	
+	
+	
+	private static void rittiBelegungPressed() throws Exception {
+		String machineID=settings.get("machineId.ritti");
+		//file laden
+		String umbenenner_file_name = settings.get("umbenenner.filename_ritti");
+		
+		File file = new File(umbenenner_file_name);
+		FileInputStream fis=null;;		
+		fis = new FileInputStream(file);		
+		byte[] data = new byte[(int) file.length()];		
+		fis.read(data);		
+		fis.close();		
+		String csv = new String(data, "UTF-8");
+		//datenbank alle alten auf invalid
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		String sql = "";
+		Statement statement = con.createStatement();
+    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
+    	statement.executeUpdate(sql);    	
+		//dieses schreiben
+    	PreparedStatement pstmt = con.prepareStatement(
+    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
+    	pstmt.setString(1, machineID);
+    	pstmt.setString(2, csv);
+    	pstmt.setString(3, "???");
+    	pstmt.execute();
+		
+	}
+
+	private static void korniBelegungPressed() throws Exception {
+		String machineID=settings.get("machineId.korni");
+		//file laden
+		String umbenenner_file_name = settings.get("umbenenner.filename_korni");
+		
+		File file = new File(umbenenner_file_name);
+		FileInputStream fis=null;;		
+		fis = new FileInputStream(file);		
+		byte[] data = new byte[(int) file.length()];		
+		fis.read(data);		
+		fis.close();		
+		String csv = new String(data, "UTF-8");
+		//datenbank alle alten auf invalid
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		String sql = "";
+		Statement statement = con.createStatement();
+    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
+    	statement.executeUpdate(sql);    	
+		//dieses schreiben
+    	PreparedStatement pstmt = con.prepareStatement(
+    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
+    	pstmt.setString(1, machineID);
+    	pstmt.setString(2, csv);
+    	pstmt.setString(3, "???");
+    	pstmt.execute();
+	}
+
+	private static Object korniButtonPressed() throws Exception {
+		// TODO Auto-generated method stub
+		//parameter korni laden
+		//Dann ab die post
+		System.out.println ("KORNI SELECTED");
+		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.korni"));
+		Datei datei = new Datei();
+		datei.readFile(settings.get("audit_file_korni"),umbenennung);		
+		datei.save_csv("");
+		datei.copyEVA(settings.get("eva_file_korni"));
+		datei.getZusammenfassung();
+		
+		datei.parseEVA(settings.get("eva_file_korni"),umbenennung);
+		return null;
+	}
+
+	private static Object rittiButtonPressed() throws Exception {
+		// TODO Auto-generated method stub
+		//parameter korni laden
+		//Dann ab die post
+		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.ritti"));
+		System.out.println ("ritti SELECTED");
+		Datei datei = new Datei();
+		datei.readFile(settings.get("audit_file_ritti"),umbenennung);		
+		datei.save_csv("");
+		datei.copyEVA(settings.get("eva_file_ritti"));
+		datei.getZusammenfassung();
+		
+		datei.parseEVA(settings.get("eva_file_ritti"),umbenennung);
+		return null;
+	}
+
+	public static void main(String[] args) 
 	{
 		buchungen = new Buchungen();
 		settings  = Settings.getInstance();
@@ -162,93 +252,6 @@ public class Start {
 		//importieren
 		//exportieren
 
-	}
-
-	private static void rittiBelegungPressed() throws Exception {
-		String machineID=settings.get("machineId.ritti");
-		//file laden
-		String umbenenner_file_name = settings.get("umbenenner.filename_ritti");
-		
-		File file = new File(umbenenner_file_name);
-		FileInputStream fis=null;;		
-		fis = new FileInputStream(file);		
-		byte[] data = new byte[(int) file.length()];		
-		fis.read(data);		
-		fis.close();		
-		String csv = new String(data, "UTF-8");
-		//datenbank alle alten auf invalid
-		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
-		String sql = "";
-		Statement statement = con.createStatement();
-    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
-    	statement.executeUpdate(sql);    	
-		//dieses schreiben
-    	PreparedStatement pstmt = con.prepareStatement(
-    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
-    	pstmt.setString(1, machineID);
-    	pstmt.setString(2, csv);
-    	pstmt.setString(3, "???");
-    	pstmt.execute();
-		
-	}
-
-	private static void korniBelegungPressed() throws Exception {
-		String machineID=settings.get("machineId.korni");
-		//file laden
-		String umbenenner_file_name = settings.get("umbenenner.filename_korni");
-		
-		File file = new File(umbenenner_file_name);
-		FileInputStream fis=null;;		
-		fis = new FileInputStream(file);		
-		byte[] data = new byte[(int) file.length()];		
-		fis.read(data);		
-		fis.close();		
-		String csv = new String(data, "UTF-8");
-		//datenbank alle alten auf invalid
-		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
-		String sql = "";
-		Statement statement = con.createStatement();
-    	sql="UPDATE umbenenner SET is_valid=false WHERE machineID=\'"+machineID+"\';";
-    	statement.executeUpdate(sql);    	
-		//dieses schreiben
-    	PreparedStatement pstmt = con.prepareStatement(
-    			   "INSERT into umbenenner VALUES ('',?,?,?,true);");
-    	pstmt.setString(1, machineID);
-    	pstmt.setString(2, csv);
-    	pstmt.setString(3, "???");
-    	pstmt.execute();
-	}
-
-	private static Object korniButtonPressed() throws Exception {
-		// TODO Auto-generated method stub
-		//parameter korni laden
-		//Dann ab die post
-		System.out.println ("KORNI SELECTED");
-		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.korni"));
-		Datei datei = new Datei();
-		datei.readFile(settings.get("audit_file_korni"),umbenennung);		
-		datei.save_csv("");
-		datei.copyEVA(settings.get("eva_file_korni"));
-		datei.getZusammenfassung();
-		
-		datei.parseEVA(settings.get("eva_file_korni"),umbenennung);
-		return null;
-	}
-
-	private static Object rittiButtonPressed() throws Exception {
-		// TODO Auto-generated method stub
-		//parameter korni laden
-		//Dann ab die post
-		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.ritti"));
-		System.out.println ("ritti SELECTED");
-		Datei datei = new Datei();
-		datei.readFile(settings.get("audit_file_ritti"),umbenennung);		
-		datei.save_csv("");
-		datei.copyEVA(settings.get("eva_file_ritti"));
-		datei.getZusammenfassung();
-		
-		datei.parseEVA(settings.get("eva_file_ritti"),umbenennung);
-		return null;
 	}
 
 }
