@@ -1,11 +1,16 @@
-import java.io.BufferedReader;
+import java.io.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Properties;
 
+import javax.swing.*;
 /**
  * Lädt die Umbenennungstabelle, Format BezeichnungAutomat;PZN;Artikelname;Steuersatz
  * @author GuntherBackoffice
@@ -37,6 +42,7 @@ public class Umbenennung {
 		//csv lesen und Artikel anlegen
 		
 	}
+	/**
 	//ALTE VARIANTE WO VOM STICK EINGELESEN WIRD
 	 Umbenennung (String in_Filename) throws Exception
 	{
@@ -67,16 +73,47 @@ public class Umbenennung {
 		//file öffnen
 		//csv lesen und Artikel anlegen
 		
-	} 
+	} **/
 	//LIEST DIREKT AUS DER DB
-	/** Umbenennung (String in_machineID) throws Exception
+	 Umbenennung (String in_machineID) throws Exception
 	{
+		 
+		//Hole aus DB CSV mit der machine ID und is valid
+		
+		Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
+		String sql = "";
+		Statement statement = con.createStatement();
+    	sql="SELECT csv FROM umbenenner WHERE (machineID=? AND is_valid=true);";		
+    	PreparedStatement pstmt = con.prepareStatement(
+    			   sql);
+    	pstmt.setString(1, in_machineID);    	
+    	pstmt.execute();
+    	ResultSet resultset = pstmt.getResultSet();
+
+    	int i = 0;
+    	while(resultset.next()) {
+    	    i++;
+    	}
+    	if (i!=1)
+    	{
+    		//DIALOGBOX
+    		  JFrame frame = new JFrame("ERROR CSV");
+    	      
+    	       JOptionPane.showMessageDialog(frame, "KEINE DEFINITION FÜR BELEGUNG! "+ in_machineID,"Error", JOptionPane.ERROR_MESSAGE);
+    	 
+    	       //frame.setSize(350,350);
+    	       //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	       //frame.setVisible(true);
+    	}
+    	
+    	resultset.first();
+    	String in_csv = resultset.getString(1);
+		
 		artikelListe = new HashMap<String, Artikel>();
 		num_artikelListe = new HashMap <Integer, Artikel>() ;
 		    BufferedReader br = null;
-	        FileReader fr = null;
-	        fr = new FileReader(in_Filename);
-	        br = new BufferedReader(fr);
+	        StringReader reader = new StringReader(in_csv);
+	        br = new BufferedReader(reader);
 	        String l;
 	        String separator =";";
 	        
@@ -90,7 +127,7 @@ public class Umbenennung {
 	          //  System.out.println(artikelListe.get(col[0]).getCSV());
 	            
 	        }
-	        br.close();
+	        //br.close();
 	        System.out.println ("INIT ARTIKELLISTE"+artikelListe.size());
 	        
 	        
@@ -98,7 +135,7 @@ public class Umbenennung {
 		//file öffnen
 		//csv lesen und Artikel anlegen
 		
-	} **/
+	} 
 	/**
 	 * Gibt Artikelobjekt zur entsprechenden internen Bezeichnung retour.
 	 * @param inText
@@ -125,7 +162,7 @@ public class Umbenennung {
 		} catch (IOException ex) {
 		    
 		}
-		String umbenenner_filename = prop.getProperty("umbenenner.filename");
+		String umbenenner_filename = prop.getProperty("machineId.korni");
 		
 		Umbenennung umbenennung = new Umbenennung (umbenenner_filename);
 	}

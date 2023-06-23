@@ -23,11 +23,11 @@ public class Buchungszeile
 		System.out.print("Falsche Initialisierung Buchungszeile!");
 		
 	}
-	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat) throws Exception
+	/** Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat, String in_machineID) throws Exception
 	{
 
 		pos=inPos;
-		umbenennung= new Umbenennung("f:\\\\Lagerbeschreibung_Automat_korni.csv");
+		umbenennung= new Umbenennung(in_machineID);
 		artikel = umbenennung.get(inPos);
 		pzn = artikel.get_pzn();
 		steuersatz = artikel.get_steuersatz();
@@ -39,7 +39,7 @@ public class Buchungszeile
 		//berechne nettowert		
 		
 		
-	}
+	}**/
 
 	
 	Buchungszeile (String inPos, Double in_betrag, Double in_menge, boolean in_is_bankomat, String inProduktListe) throws Exception

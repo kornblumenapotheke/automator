@@ -69,7 +69,7 @@ public class Datei {
 	 * @return
 	 * @throws Exception
 	 */
-	public Buchungen readFile (String inDateiname) throws Exception
+	public Buchungen readFile (String inDateiname, String in_machineID) throws Exception
 	{
 			Connection con =  (java.sql.Connection) DatabaseConnection.getConnection();
 			boolean bereitsGelesen =false;
@@ -81,13 +81,11 @@ public class Datei {
 	        String sql = "";
 	        String l;
 	        String separator ="\t";
-	        // Erste Zeile ist die ID der Machine
-	        
-	        
+	        // Erste Zeile ist die ID der Machine       
 	        machineID=br.readLine();
 	        int posID=machineID.indexOf("VND");
 	        machineID=machineID.substring(posID);
-	        System.out.println ("ID MACHINE: "+machineID);
+	        //System.out.println ("ID MACHINE: "+machineID);
 	      //jetzt noch Sicherung erstellen.
         	
 	        br.readLine();
@@ -108,6 +106,7 @@ public class Datei {
         	}
         	catch (Exception e)
         	{
+        		System.out.println(e.toString());
         		JFrame frame = new JFrame(); 
         		JOptionPane.showMessageDialog(frame, "Datei wurde bereits eingelesen!Keine Sicherungskopie!");
         		bereitsGelesen=true;
@@ -185,7 +184,7 @@ public class Datei {
 	        		 
 	        		 if (Double.parseDouble(string_anzahl_abgaben) > 0.0) //Buchungszeile hinzufügen wenn was verkauft wurde
 	        		 {
-	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false);
+	        			 buchungen.add_buchungszeile(string_artikelID, Double.parseDouble (string_anzahl_abgaben), Double.parseDouble(string_betrag_umsatz), false, in_machineID);
 	        			
 	        			sql="";
 	        			sql+="\'\',";
@@ -211,6 +210,7 @@ public class Datei {
 	        		// buchungen.add_buchungszeile(artikelID, anzahl_abgaben, betrag_umsatz, false);
 	        		 
 	        	}
+	        	
 	        	System.out.println ("INTERESSANTE BUCHUNGEN: "+buchungen.size());
 	        	
 	        	
@@ -235,7 +235,7 @@ public class Datei {
 		Datei datei = new Datei ();
 		try
 		{
-			Buchungen return_buchungen = datei.readFile("D:\\AUDIT.txt");
+			Buchungen return_buchungen = datei.readFile("D:\\AUDIT.txt","TEST");
 			//datei.copyFile("D:\\AUDIT.txt", "D:\\xxx\\"+datei.getMachineID()+"_"+datei.getZeit()+"AUDIT.txt");
 			System.out.println(return_buchungen.getText());
 			

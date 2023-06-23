@@ -164,20 +164,20 @@ public class EvaDtsParser {
 				//COL
 				matcher=pattern_column.matcher(zeile);
 				if (matcher.find()) {
-					//System.out.println("Column: "+matcher.group(1));
+					System.out.println("Column: "+matcher.group(1));
 					column=matcher.group(1);			
 					}
 				//ANZAHL
 				matcher=pattern_anzahl.matcher(zeile);
 				if (matcher.find()) {
-					//System.out.println("Anzahl: "+matcher.group(1));
+					System.out.println("Anzahl: "+matcher.group(1));
 					anzahl=matcher.group(1);			
 					}
 				
 				//BETRAG
 				matcher=pattern_betrag.matcher(zeile);
 				if (matcher.find()) {
-					//System.out.println("Betrag: "+matcher.group(1));
+					System.out.println("Betrag: "+matcher.group(1));
 					betrag=matcher.group(1);			
 					}
 				
@@ -223,7 +223,7 @@ public class EvaDtsParser {
 
 	public static void main(String[] args) 
 	{
-	EvaDtsParser eva = new EvaDtsParser("F:\\10_14061\\EVA_READ.VID","f:\\\\Lagerbeschreibung_Automat_korni.csv"); 	
+	//EvaDtsParser eva = new EvaDtsParser("F:\\10_14061\\EVA_READ.VID",settings.get("machineId.korni")); 	
 
 	}
 
