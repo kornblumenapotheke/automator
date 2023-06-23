@@ -16,6 +16,8 @@ public class EvaDtsParser {
 	String stand_050_euro="0";
 	String stand_020_euro="0";
 	String stand_010_euro="0";
+	String auslesezeit ="XXX";
+	String auslesedatum ="XXX";
 	Umbenennung umbenennung = null;
 	
 	MyArrayList<Buchungszeile> buchungen = new MyArrayList<Buchungszeile> ();
@@ -36,6 +38,8 @@ public class EvaDtsParser {
 		Pattern pattern_column=Pattern.compile("PA7[*](.*?)[*]");
 		Pattern pattern_anzahl=Pattern.compile("PA7[*].*[*].*[*].*[*].*[*].*[*].*[*](.*?)[*]");
 		Pattern pattern_betrag=Pattern.compile("PA7[*].*[*].*[*].*[*].*[*].*[*].*[*].*[*](.*$?)");
+		Pattern pattern_auslesezeit=Pattern.compile("EA3[*]0[*]........[*](.*?)[*]");
+		Pattern pattern_auslesedatum=Pattern.compile("EA3[*]0[*](.*?)[*]");
 		
 		
 		
@@ -93,6 +97,16 @@ public class EvaDtsParser {
 			System.out.println("0,10€: "+matcher.group(1));
 			stand_010_euro=matcher.group(1);			
 			}
+		matcher=pattern_auslesezeit.matcher(last_transaction);
+		if (matcher.find()) {
+			System.out.println("ZEIT: "+matcher.group(1));
+			auslesezeit=matcher.group(1);			
+			}
+		matcher=pattern_auslesedatum.matcher(last_transaction);
+		if (matcher.find()) {
+			System.out.println("ZEIT: "+matcher.group(1));
+			auslesedatum=matcher.group(1);			
+			}
 		
 		EvaInfoWindow evaInfoWindow = new EvaInfoWindow ();
 		evaInfoWindow.set2Euro (stand_2_euro);
@@ -101,6 +115,7 @@ public class EvaDtsParser {
 		evaInfoWindow.set20Cent (stand_020_euro);
 		evaInfoWindow.set10Cent (stand_010_euro);
 		evaInfoWindow.setMachineID (machineID);
+		evaInfoWindow.setAusleseZeit(auslesedatum,auslesezeit);
 		
 		evaInfoWindow.show();
 		

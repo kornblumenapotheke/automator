@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  * 
  * @author Gunther
@@ -42,7 +45,9 @@ public class Settings {
 			    prop.load(fis);
 				} 
 				catch (Exception ex) {
-					System.out.println (ex.toString());
+					System.out.println ("SETTINGS ERROR:"+ex.toString());
+					JFrame frame = new JFrame(); 
+	        		JOptionPane.showMessageDialog(frame, "SETTINGS ERROR:"+ex.toString());
 			    
 				} 
 				 

@@ -74,4 +74,10 @@ public class EvaInfoWindow {
 		// TODO Auto-generated method stub
 		
 	}
+	public void setAusleseZeit(String auslesedatum, String auslesezeit) {
+		
+		DefaultTableModel model = (DefaultTableModel) j.getModel();
+    	model.addRow(new Object[]{"AUSLESUNG",auslesedatum+" UM "+auslesezeit,""});
+		
+	}
 }
