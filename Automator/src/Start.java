@@ -2,19 +2,12 @@ import java.awt.Color;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -84,8 +77,7 @@ public class Start {
     	pstmt.execute();
 	}
 
-	private static Object korniButtonPressed() throws Exception {
-		// TODO Auto-generated method stub
+	private static Object korniButtonPressed() throws Exception {		
 		//parameter korni laden
 		//Dann ab die post
 		System.out.println ("KORNI SELECTED");
@@ -101,7 +93,7 @@ public class Start {
 	}
 
 	private static Object rittiButtonPressed() throws Exception {
-		// TODO Auto-generated method stub
+
 		//parameter korni laden
 		//Dann ab die post
 		Umbenennung umbenennung = new Umbenennung(settings.get("machineId.ritti"));
@@ -116,7 +108,7 @@ public class Start {
 		return null;
 	}
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws Exception 
 	{
 		buchungen = new Buchungen();
 		settings  = Settings.getInstance();
@@ -174,7 +166,7 @@ public class Start {
 			try {
 				rittiButtonPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
@@ -184,7 +176,7 @@ public class Start {
 			try {
 				korniButtonPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
@@ -193,7 +185,7 @@ public class Start {
 			try {
 				korniBelegungPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
@@ -202,7 +194,7 @@ public class Start {
 			try {
 				rittiBelegungPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
@@ -211,7 +203,7 @@ public class Start {
 			try {
 				//korniButtonPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
@@ -220,7 +212,7 @@ public class Start {
 			try {
 				//korniButtonPressed();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 		});
