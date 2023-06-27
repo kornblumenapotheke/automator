@@ -134,7 +134,7 @@ public class Umbenennung {
 	public static void main(String[] args) throws Exception 
 	{
 		
-		Properties prop = new Properties();
+		/** Properties prop = new Properties();
 		String fileName = "src/settings/app.config";
 		try (FileInputStream fis = new FileInputStream(fileName)) {
 		    prop.load(fis);
@@ -145,7 +145,7 @@ public class Umbenennung {
 		}
 		String umbenenner_filename = prop.getProperty("machineId.ritti");
 		Umbenennung umbenennung = new Umbenennung (umbenenner_filename);
-		System.out.println ("UMBENENNUNG DONE:\n");
+		System.out.println ("UMBENENNUNG DONE:\n"); **/
 	}
 
 }

@@ -1,4 +1,4 @@
-import java.io.FileInputStream;
+import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,7 +19,7 @@ public class Settings {
 	 /**
 	  * 
 	  */
-	 private static String package_filename_settings="src/settings/app.config"; //lokale settings
+	 private static String package_filename_settings="settings/app.config"; //lokale settings
 	 private static String filename_settings="app.config";
 	 
 	 
@@ -36,11 +36,11 @@ public class Settings {
 		    
 		    //nein, dann copy from package
 		    
-		   
+		   //prop.load(new FileInputStream(getClass().getResource("/src/settings/app.config").toURI()));
 				 
 			
 			
-		    
+		    /**
 			try (FileInputStream fis = new FileInputStream(package_filename_settings)) {
 			    prop.load(fis);
 				} 
@@ -49,7 +49,24 @@ public class Settings {
 					JFrame frame = new JFrame(); 
 	        		JOptionPane.showMessageDialog(frame, "SETTINGS ERROR:"+ex.toString());
 			    
-				} 
+				}
+			**/
+		    try 
+		    {
+		    	InputStream in = getClass().getResourceAsStream(package_filename_settings);
+		    	//BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		    	prop.load(in);
+		    	    // Use resource
+		    }
+		    catch (Exception ex)
+		    {
+		    	System.out.println ("SETTINGS ERROR:"+ex.toString());
+				JFrame frame = new JFrame(); 
+        		JOptionPane.showMessageDialog(frame, "SETTINGS ERROR:"+ex.toString());
+		    
+		    	
+		    }
+		    
 				 
 			
 	  }    
